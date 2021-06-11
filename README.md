@@ -1,4 +1,4 @@
-# TDE_PROGRAMA-O
+# TDE_PROGRAMA
 
 Trabalho Interdisciplinar de Programação de Computadores / 2021
 
