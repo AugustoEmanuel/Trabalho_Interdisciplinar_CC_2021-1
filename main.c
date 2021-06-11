@@ -1,19 +1,16 @@
 /*
 
-TDE de Programação de Computadores
+TDE de ProgramaÃ§Ã£o de Computadores
 
 Integrantes do Grupo:
-Augusto Emanuel Batista Novaes Santos - 6107754
-Guilherme Marques Tavares  - 9379212
-Pablo Luis dos Santos Alves - 8553028
-Gabriel dos Santos Bello Botelho - 1829450
-Felipe Bruno Costa da Silva - 3351768
+Augusto Emanuel Batista Novaes Santos
+Guilherme Marques Tavares
+Pablo Luis dos Santos Alves
+Gabriel dos Santos Bello Botelho
+Felipe Bruno Costa da Silva
 
 
-Para entrar no debug mode, basta abrir o main.exe com CMD usando o comando: main.exe -debug
-Debug mode está aqui podemos verificar se o programa as lendo o algoritmo de maneira correta
-
-Código testado usando GCC e G++ no Windows 10 e apenas GCC no Puppy Linux
+CÃ³digo testado usando GCC e G++ no Windows 10 e apenas GCC no Ubuntu
 */
 
 
@@ -21,38 +18,34 @@ Código testado usando GCC e G++ no Windows 10 e apenas GCC no Puppy Linux
 #include <stdlib.h>
 #include <string.h>
 
-//Verifica se o sistema operacional é windows
+//Verifica se o sistema operacional Ã© windows
 #if defined(_WIN32) || defined(_WIN64)
 	#include <Windows.h>
 #endif
 
 //Tamanho maximo de linhas validas do database
-#define MAX_SIZE_OF_DATABASE = 1347;
-//Tamanho minimo de linhas validas do database
-#define MIN_SIZE_OF_DATABASE = 0;
+const int MAX_SIZE_OF_DATABASE = 1347;
 
 //Carrega os dados do database para o struct principal(db)
 void LerArquivo();
 
-//Mostra o menu da opção 1 e executa todos suas funções
+//Mostra o menu da opÃ§Ã£o 1 e executa todos suas funÃ§Ãµes
 void Option1();
 
-//Mostra o menu da opção 2 e executa todos suas funções
+//Mostra o menu da opÃ§Ã£o 2 e executa todos suas funÃ§Ãµes
 void Option2();
 
-//Usando o algoritmo de Insertion Sort (tem certeza que é insertion? :) <- Olhar psicopata)
+//Usando o algoritmo de Insertion Sort
 void ParaDecrescente();
 
-//Mostra o menu principal e retorna a opção selecionada pelo usuario
+//Mostra o menu principal e retorna a opÃ§Ã£o selecionada pelo usuario
 int MainMenu();
 
-//Mostra os dados. Essa função é somente usada em DEBUG MODE.
+//Mostra os dados. Essa funÃ§Ã£o Ã© somente usada em DEBUG MODE.
 void ListarDados();
 
 //Limpa a tela
 void Clrscr();
-
-_Bool debugMode = 0;
 
 
 //Struct de dados do Database
@@ -68,9 +61,7 @@ typedef struct
 dados db[1347]; //Dados Principais
 dados dbDec[1347]; //Dados decrescentes
 
-int main(int argc, char **argv) {
-
-	debugMode = 1;
+int main() {
 
 	LerArquivo();
 	memcpy(dbDec, db, sizeof(db));
@@ -87,12 +78,6 @@ int main(int argc, char **argv) {
 				break;
 			case 3:
 				return 0;	
-		}
-
-		if (debugMode) {
-			if (op == 4) {
-				ListarDados();
-			}
 		}
 	}
 	return 0;
@@ -115,7 +100,7 @@ void Option1() {
 
 	if (ano >= 2016 && ano <= 2018) {
 		int c = 0;
-		for (int i = 0; i < 1347; i++) {
+		for (int i = 0; i < MAX_SIZE_OF_DATABASE; i++) {
 			if (c < 5) {
 				if (dbDec[i].ANO == ano) {
 					strcpy(r[c].nome, dbDec[i].NOME);
@@ -151,7 +136,9 @@ void Option1() {
 	//Aguardar o ENTER
 	getchar();
 	char enter = 0;
-	while (enter != '\r' && enter != '\n') { enter = getchar(); }
+	while (enter != '\r' && enter != '\n') { 
+		enter = getchar(); 
+	}
 }
 
 void Option2() {
@@ -171,7 +158,7 @@ void Option2() {
 
 	//Buscar dados no database
 	for (int c = 2016; c <= 2018; c++) {
-		for (int i = 0; i < 1347; i++) {
+		for (int i = 0; i < MAX_SIZE_OF_DATABASE; i++) {
 			if (db[i].ANO == c && db[i].CODMUN7 == codigo) {
 				if (c == 2016) {
 					strcpy(r.nome, db[i].NOME);
@@ -221,12 +208,10 @@ void Option2() {
 void ParaDecrescente() {
 	for (int i = 0; i < 1346; i++) {
 		int k = i;
-		while (k >= 0) {
-			if (dbDec[k].CV_SCR1 < dbDec[k + 1].CV_SCR1) {
-				dados buffer = dbDec[k];
-				dbDec[k] = dbDec[k + 1];
-				dbDec[k + 1] = buffer;
-			}
+		while (k >= 0 && dbDec[k].CV_SCR1 < dbDec[k + 1].CV_SCR1) {
+			dados buffer = dbDec[k];
+			dbDec[k] = dbDec[k + 1];
+			dbDec[k + 1] = buffer;
 			k--;
 		}
 	}
@@ -236,18 +221,12 @@ int MainMenu() {
 	system("cls");
 	int op;
 
-	if (debugMode)
-		printf("DEBUG MODE\n");
-
 	printf("*************************************************\n");
 	printf("* Pesquisa vacinas cidades do Norte do Brasil ***\n");
 	printf("*************************************************\n");
 	printf("1-Pesquisa por ano\n");
 	printf("2-Pesquisa por codigo da cidade\n");
 	printf("3-Sair\n");
-	if (debugMode) {
-		printf("4- Listar todos os dados\n");
-	}
 	printf("Digite uma opcao: ");
 	scanf("%d", &op);
 
@@ -263,12 +242,12 @@ void ListarDados() {
 
 	printf("COD7     NOME                           ANO  CV1 ENDERECO DE MEMORIA FISICA\n");
 	if (op == 1) {
-		for (int i = 0; i < 1347; i++) {
+		for (int i = 0; i < MAX_SIZE_OF_DATABASE; i++) {
 			printf("%d %-30s %d %d 0x%p\n", db[i].CODMUN7, db[i].NOME, db[i].ANO, db[i].CV_SCR1, &db[i]);
 		}
 	}
 	else {
-		for (int i = 0; i < 1347; i++) {
+		for (int i = 0; i < MAX_SIZE_OF_DATABASE; i++) {
 			printf("%d %-30s %d %d 0x%p\n", dbDec[i].CODMUN7, dbDec[i].NOME, dbDec[i].ANO, dbDec[i].CV_SCR1, &dbDec[i]);
 		}
 	}
@@ -280,25 +259,25 @@ void LerArquivo() {
 	FILE* arquivo;
 	arquivo = fopen("database.csv", "r"); //Abre o arquivo para leitura
 	char buff[1024];
-	fgets(buff, 1024, arquivo); //Usado para ignorar o cabeçalho
+	fgets(buff, 1024, arquivo); //Usado para ignorar o cabeÃ§alho
 
-	for (int c = 0; c < 1347; c++) {
+	for (int c = 0; c < MAX_SIZE_OF_DATABASE; c++) {
 
 		fgets(buff, 1024, arquivo); //Le a linha
 
 		strtok(buff, "\"");
-		strtok(NULL, "\""); //Dado não necessario
+		strtok(NULL, "\""); //Dado nÃ£o necessario
 		char* codigo7 = 0;
 		codigo7 = strtok(NULL, "\""); //Dado CODMUN7
-		strtok(NULL, "\""); //Dado não necessario
-		strtok(NULL, "\""); //Dado não necessario
-		strtok(NULL, "\""); //Dado não necessario
+		strtok(NULL, "\""); //Dado nÃ£o necessario
+		strtok(NULL, "\""); //Dado nÃ£o necessario
+		strtok(NULL, "\""); //Dado nÃ£o necessario
 		char* ano = strtok(NULL, "\""); //Dado ANO
 		strtok(NULL, "\"");
 		char* nome = strtok(NULL, "\""); //Dado NOME
 		strtok(NULL, "\"");
 		char* CV1 = strtok(NULL, "\""); //Dado CV1
-		strtok(NULL, "\""); //Dado não necessario
+		strtok(NULL, "\""); //Dado nÃ£o necessario
 
 		//Carrega os dados para struct principal (db)
 		{
@@ -320,12 +299,12 @@ void LerArquivo() {
 
 void Clrscr() {
 
-	//Para limpar a tela é necessario a verificação do sistema operacional, sistemas MS-DOS/WIN e UNIX/LINUX não possuem o mesmo comando para limpar a tela.
+	//Para limpar a tela Ã© necessario a verificaÃ§Ã£o do sistema operacional, sistemas MS-DOS/WIN e UNIX/LINUX nÃ£o possuem o mesmo comando para limpar a tela.
 
-#if defined(_WIN32) || defined(_WIN64)
-	system("cls");
-#endif
-#if defined(__linux__) || defined(__unix__)
-	system("clear");
-#endif
+	#if defined(_WIN32) || defined(_WIN64)
+		system("cls");
+	#endif
+	#if defined(__linux__) || defined(__unix__)
+		system("clear");
+	#endif
 }
