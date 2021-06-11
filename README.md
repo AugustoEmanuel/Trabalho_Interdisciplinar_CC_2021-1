@@ -2,7 +2,7 @@
 
 Trabalho Interdisciplinar de Programação de Computadores / 2021
 
-Membros do grupo:
+Membros do grupo:  
 Augusto Emanuel Batista Novaes Santos  
 Guilherme Marques Tavares  
 Pablo Luis dos Santos Alves  
